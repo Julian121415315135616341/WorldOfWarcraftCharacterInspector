@@ -6,11 +6,6 @@ namespace JulianWow.Agents;
 
 public class BattleNetAgent(BattleNetAuth battleNetAuth) : IBattleNetAgent
 {
-    
-    
-    
-    
-    
     public async Task<string> GetAccessToken()
     {
         return await battleNetAuth.GetAccessToken();
