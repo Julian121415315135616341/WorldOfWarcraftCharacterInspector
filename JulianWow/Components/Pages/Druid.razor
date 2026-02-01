@@ -1,0 +1,349 @@
+﻿@rendermode InteractiveServer
+@page "/druid"
+
+<PageTitle>Druid - @(_character?.Name ?? "Loading...")</PageTitle>
+
+<div class="wow-character-page">
+    @if (_isLoading)
+    {
+        <div class="loading">
+            <h2>Loading character data...</h2>
+        </div>
+    }
+    else if (_character != null)
+    {
+        <div class="character-header @GetFactionClass()">
+            <div class="character-name-plate">
+                <h1 class="character-name">@_character.Name</h1>
+                <p class="character-title">
+                    Level @_character.Level @_character.Race.Name @_character.ActiveSpec.Name @_character.CharacterClass.Name
+                </p>
+            </div>
+            <div class="character-realm">
+                <span class="realm-name">@_character.Realm.Name</span>
+                <span class="faction-badge @GetFactionClass()">@_character.Faction.Name</span>
+            </div>
+        </div>
+
+        <div class="character-content">
+            <div class="character-stats-card">
+                <h2>Character Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Item Level</span>
+                        <span class="stat-value ilvl">@_character.EquippedItemLevel</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Average iLvl</span>
+                        <span class="stat-value">@_character.AverageItemLevel</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Achievement Points</span>
+                        <span class="stat-value achievement">@_character.AchievementPoints.ToString("N0")</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-info-card">
+                <h2>Character Information</h2>
+                <div class="info-grid">
+                    <div class="info-row">
+                        <span class="info-label">Race:</span>
+                        <span class="info-value">@_character.Race.Name</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Class:</span>
+                        <span class="info-value class-@_character.CharacterClass.Name.ToLower()">@_character.CharacterClass.Name</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Specialization:</span>
+                        <span class="info-value">@_character.ActiveSpec.Name</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Gender:</span>
+                        <span class="info-value">@_character.Gender.Name</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Faction:</span>
+                        <span class="info-value @GetFactionClass()">@_character.Faction.Name</span>
+                    </div>
+                    @if (_character.Guild != null)
+                    {
+                        <div class="info-row">
+                            <span class="info-label">Guild:</span>
+                            <span class="info-value guild-name">&lt;@_character.Guild.Name&gt;</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Guild Realm:</span>
+                            <span class="info-value">@_character.Guild.Realm.Name</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (_stats != null)
+        {
+            <div class="detailed-stats-section">
+                <h2 class="section-title">Detailed Statistics</h2>
+                
+                <div class="stats-scroll-container">
+                    <div class="stats-category">
+                        <h3>Core Stats</h3>
+                        <div class="stats-detail-grid">
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Health</span>
+                                <span class="detail-value health">@_stats.Health.ToString("N0")</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">@_stats.PowerType.Name</span>
+                                <span class="detail-value mana">@_stats.Power.ToString("N0")</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Armor</span>
+                                <span class="detail-value">@_stats.Armor.Effective</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-category">
+                        <h3>Primary Attributes</h3>
+                        <div class="stats-detail-grid">
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Strength</span>
+                                <span class="detail-value">@_stats.Strength.Effective <span class="base-stat">(Base: @_stats.Strength.Base)</span></span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Agility</span>
+                                <span class="detail-value">@_stats.Agility.Effective <span class="base-stat">(Base: @_stats.Agility.Base)</span></span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Intellect</span>
+                                <span class="detail-value intellect">@_stats.Intellect.Effective <span class="base-stat">(Base: @_stats.Intellect.Base)</span></span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Stamina</span>
+                                <span class="detail-value">@_stats.Stamina.Effective <span class="base-stat">(Base: @_stats.Stamina.Base)</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-category">
+                        <h3>Spell Stats</h3>
+                        <div class="stats-detail-grid">
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Spell Power</span>
+                                <span class="detail-value spell-power">@_stats.SpellPower</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Spell Crit</span>
+                                <span class="detail-value">@_stats.SpellCrit.Value.ToString("F2")%</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Spell Haste</span>
+                                <span class="detail-value">@_stats.SpellHaste.Value.ToString("F2")%</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Mana Regen</span>
+                                <span class="detail-value">@_stats.ManaRegen</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-category">
+                        <h3>Secondary Stats</h3>
+                        <div class="stats-detail-grid">
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Mastery</span>
+                                <span class="detail-value mastery">@_stats.Mastery.Value.ToString("F2")%</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Versatility</span>
+                                <span class="detail-value versatility">@_stats.Versatility (@_stats.VersatilityDamageDoneBonus.ToString("F2")%)</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Speed</span>
+                                <span class="detail-value">@_stats.Speed.RatingBonus.ToString("F2")%</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Dodge</span>
+                                <span class="detail-value">@_stats.Dodge.Value.ToString("F2")%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-category">
+                        <h3>Melee Stats</h3>
+                        <div class="stats-detail-grid">
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Melee Crit</span>
+                                <span class="detail-value">@_stats.MeleeCrit.Value.ToString("F2")%</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Melee Haste</span>
+                                <span class="detail-value">@_stats.MeleeHaste.Value.ToString("F2")%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (_equipment != null && _equipment.EquippedItems.Any())
+        {
+            <div class="equipment-section">
+                <h2 class="section-title">Equipment</h2>
+                
+                <div class="equipment-grid">
+                    @foreach (var item in _equipment.EquippedItems.OrderBy(i => GetSlotOrder(i.Slot.Type)))
+                    {
+                        <div class="equipment-item quality-@item.Quality.Type.ToLower()">
+                            <div class="item-header">
+                                <span class="item-slot">@item.Slot.Name</span>
+                                @if (item.Level != null)
+                                {
+                                    <span class="item-level">iLvl @item.Level.Value</span>
+                                }
+                            </div>
+                            
+                            <div class="item-name">@item.Name</div>
+                            
+                            @if (item.NameDescription != null)
+                            {
+                                <div class="item-description">@item.NameDescription.DisplayString</div>
+                            }
+                            
+                            <div class="item-info">
+                                <div class="item-type-row">
+                                    <span class="item-type">@item.ItemSubclass.Name</span>
+                                    @if (item.Sockets != null && item.Sockets.Any())
+                                    {
+                                        <span class="item-sockets">
+                                            @foreach (var socket in item.Sockets)
+                                            {
+                                                <span class="socket-gem" title="@(socket.Item?.Name ?? socket.SocketType.Name)">💎</span>
+                                            }
+                                        </span>
+                                    }
+                                </div>
+                                
+                                @if (item.Armor != null && item.Armor.Value > 0)
+                                {
+                                    <div class="item-armor">🛡️ @item.Armor.Value Armor</div>
+                                }
+                                
+                                @if (item.Weapon != null)
+                                {
+                                    <div class="item-weapon-info">
+                                        @if (item.Weapon.Damage != null)
+                                        {
+                                            <div class="weapon-damage">⚔️ @item.Weapon.Damage.DisplayString</div>
+                                        }
+                                        @if (item.Weapon.AttackSpeed != null)
+                                        {
+                                            <div class="weapon-speed">⚡ @item.Weapon.AttackSpeed.DisplayString</div>
+                                        }
+                                        @if (item.Weapon.Dps != null)
+                                        {
+                                            <div class="weapon-dps">💥 @item.Weapon.Dps.DisplayString</div>
+                                        }
+                                    </div>
+                                }
+                                
+                                @if (item.Stats != null && item.Stats.Any(s => !s.IsNegated))
+                                {
+                                    <div class="item-stats">
+                                        @foreach (var stat in item.Stats.Where(s => !s.IsNegated))
+                                        {
+                                            <div class="stat-line @(stat.IsEquipBonus ? "equip-bonus" : "")">
+                                                <span class="stat-icon">@GetStatIcon(stat.Type.Type)</span>
+                                                <span class="stat-text">@stat.Display?.DisplayString</span>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                
+                                @if (item.Spells != null && item.Spells.Any())
+                                {
+                                    <div class="item-spells">
+                                        @foreach (var spell in item.Spells)
+                                        {
+                                            <div class="spell-effect">
+                                                <div class="spell-name">✨ @spell.Spell.Name</div>
+                                                <div class="spell-description">@spell.Description</div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                
+                                @if (item.Set != null)
+                                {
+                                    <div class="item-set">
+                                        <div class="set-name">@item.Set.DisplayString</div>
+                                        @if (item.Set.Effects != null && item.Set.Effects.Any())
+                                        {
+                                            @foreach (var effect in item.Set.Effects)
+                                            {
+                                                <div class="set-bonus @(effect.IsActive ? "active" : "inactive")">
+                                                    @effect.DisplayString
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private string GetFactionClass()
+    {
+        return _character?.Faction.Type.ToLower() ?? "";
+    }
+    
+    private int GetSlotOrder(string slotType)
+    {
+        return slotType switch
+        {
+            "HEAD" => 1,
+            "NECK" => 2,
+            "SHOULDER" => 3,
+            "BACK" => 4,
+            "CHEST" => 5,
+            "WRIST" => 6,
+            "HANDS" => 7,
+            "WAIST" => 8,
+            "LEGS" => 9,
+            "FEET" => 10,
+            "FINGER_1" => 11,
+            "FINGER_2" => 12,
+            "TRINKET_1" => 13,
+            "TRINKET_2" => 14,
+            "MAIN_HAND" => 15,
+            "OFF_HAND" => 16,
+            _ => 99
+        };
+    }
+    
+    private string GetStatIcon(string statType)
+    {
+        return statType switch
+        {
+            "INTELLECT" => "🧠",
+            "STAMINA" => "❤️",
+            "STRENGTH" => "💪",
+            "AGILITY" => "🏃",
+            "HASTE_RATING" => "⚡",
+            "CRIT_RATING" => "💥",
+            "MASTERY_RATING" => "🎯",
+            "VERSATILITY" => "🔄",
+            "COMBAT_RATING_SPEED" => "💨",
+            _ => "+"
+        };
+    }
+}

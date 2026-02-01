@@ -1,0 +1,731 @@
+﻿﻿.wow-character-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    background-attachment: fixed;
+}
+
+.loading {
+    text-align: center;
+    padding: 4rem;
+    color: #ffd100;
+    font-size: 1.5rem;
+}
+
+.character-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 2px solid #4a5568;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.character-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ffd100, transparent);
+}
+
+.character-header.alliance::before {
+    background: linear-gradient(90deg, transparent, #0078ff, transparent);
+}
+
+.character-header.horde::before {
+    background: linear-gradient(90deg, transparent, #b30000, transparent);
+}
+
+.character-name-plate {
+    margin-bottom: 1rem;
+}
+
+.character-name {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+    color: #ffd100;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    letter-spacing: 2px;
+}
+
+.character-title {
+    font-size: 1.3rem;
+    color: #a0aec0;
+    margin: 0.5rem 0 0 0;
+    font-weight: 500;
+}
+
+.character-realm {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.realm-name {
+    font-size: 1.1rem;
+    color: #cbd5e0;
+    font-weight: 500;
+}
+
+.faction-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.faction-badge.alliance {
+    background: linear-gradient(135deg, #0078ff, #0056b3);
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 120, 255, 0.5);
+}
+
+.faction-badge.horde {
+    background: linear-gradient(135deg, #b30000, #8b0000);
+    color: white;
+    box-shadow: 0 0 10px rgba(179, 0, 0, 0.5);
+}
+
+.character-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.character-stats-card,
+.character-info-card {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    border: 2px solid #4a5568;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.character-stats-card h2,
+.character-info-card h2 {
+    color: #ffd100;
+    font-size: 1.5rem;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    border: 1px solid #4a5568;
+}
+
+.stat-label {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.stat-value.ilvl {
+    color: #a335ee;
+    text-shadow: 0 0 10px rgba(163, 53, 238, 0.5);
+}
+
+.stat-value.achievement {
+    color: #ffd100;
+}
+
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    border-left: 3px solid #4a5568;
+}
+
+.info-label {
+    color: #a0aec0;
+    font-weight: 600;
+}
+
+.info-value {
+    color: #fff;
+    font-weight: 500;
+}
+
+.info-value.alliance {
+    color: #0078ff;
+    font-weight: bold;
+}
+
+.info-value.horde {
+    color: #b30000;
+    font-weight: bold;
+}
+
+.info-value.class-druid {
+    color: #ff7d0a;
+    font-weight: bold;
+}
+
+.info-value.class-warrior {
+    color: #c79c6e;
+    font-weight: bold;
+}
+
+.info-value.class-paladin {
+    color: #f58cba;
+    font-weight: bold;
+}
+
+.info-value.class-priest {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.info-value.class-shaman {
+    color: #0070de;
+    font-weight: bold;
+}
+
+.info-value.class-mage {
+    color: #69ccf0;
+    font-weight: bold;
+}
+
+.info-value.class-warlock {
+    color: #9482c9;
+    font-weight: bold;
+}
+
+.info-value.class-hunter {
+    color: #abd473;
+    font-weight: bold;
+}
+
+.info-value.class-rogue {
+    color: #fff569;
+    font-weight: bold;
+}
+
+.info-value.class-monk {
+    color: #00ff96;
+    font-weight: bold;
+}
+
+.info-value.class-demonhunter,
+.info-value.class-demon-hunter {
+    color: #a330c9;
+    font-weight: bold;
+}
+
+.info-value.class-deathknight,
+.info-value.class-death-knight {
+    color: #c41f3b;
+    font-weight: bold;
+}
+
+.info-value.guild-name {
+    color: #3ecc71;
+    font-style: italic;
+}
+
+.detailed-stats-section {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    border: 2px solid #4a5568;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.section-title {
+    color: #ffd100;
+    font-size: 1.8rem;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.stats-scroll-container {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.stats-scroll-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.stats-scroll-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.stats-scroll-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #ffd100, #ff9500);
+    border-radius: 5px;
+}
+
+.stats-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ffed4e, #ffb347);
+}
+
+.stats-category {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #4a5568;
+}
+
+.stats-category:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.stats-category h3 {
+    color: #cbd5e0;
+    font-size: 1.3rem;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+}
+
+.stats-category h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, #ffd100, #ff9500);
+    margin-right: 0.75rem;
+    border-radius: 2px;
+}
+
+.stats-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.75rem;
+}
+
+.detail-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.detail-stat-row:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border-left-color: #ffd100;
+    transform: translateX(5px);
+}
+
+.detail-label {
+    color: #a0aec0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.detail-value {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.05rem;
+}
+
+.base-stat {
+    color: #718096;
+    font-size: 0.85rem;
+    font-weight: normal;
+    margin-left: 0.5rem;
+}
+
+.detail-value.health {
+    color: #ff4444;
+}
+
+.detail-value.mana {
+    color: #4d9fff;
+}
+
+.detail-value.intellect {
+    color: #69ccf0;
+}
+
+.detail-value.spell-power {
+    color: #a335ee;
+    text-shadow: 0 0 5px rgba(163, 53, 238, 0.3);
+}
+
+.detail-value.mastery {
+    color: #ffb347;
+}
+
+.detail-value.versatility {
+    color: #3ecc71;
+}
+
+.equipment-section {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    border: 2px solid #4a5568;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.equipment-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.equipment-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.6;
+}
+
+.equipment-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.equipment-item.quality-poor {
+    border-color: #9d9d9d;
+    color: #9d9d9d;
+}
+
+.equipment-item.quality-common {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.equipment-item.quality-uncommon {
+    border-color: #1eff00;
+    color: #1eff00;
+}
+
+.equipment-item.quality-rare {
+    border-color: #0070dd;
+    color: #0070dd;
+}
+
+.equipment-item.quality-epic {
+    border-color: #a335ee;
+    color: #a335ee;
+}
+
+.equipment-item.quality-legendary {
+    border-color: #ff8000;
+    color: #ff8000;
+}
+
+.equipment-item.quality-artifact {
+    border-color: #e6cc80;
+    color: #e6cc80;
+}
+
+.equipment-item.quality-heirloom {
+    border-color: #00ccff;
+    color: #00ccff;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item-slot {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #a0aec0;
+}
+
+.item-level {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 0.2rem 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.item-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.item-description {
+    font-size: 0.85rem;
+    color: #00ff00;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+.item-info {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item-type-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.item-type {
+    color: #cbd5e0;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.item-armor {
+    color: #ffd700;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.item-weapon-info {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.weapon-damage,
+.weapon-speed,
+.weapon-dps {
+    color: #ffffff;
+    font-size: 0.85rem;
+    margin: 0.25rem 0;
+    font-weight: 500;
+}
+
+.weapon-dps {
+    color: #ffd700;
+}
+
+.item-stats {
+    margin: 0.75rem 0;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+.stat-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.35rem 0;
+    font-size: 0.85rem;
+    color: #ffffff;
+}
+
+.stat-line.equip-bonus {
+    color: #00ff00;
+}
+
+.stat-icon {
+    font-size: 1rem;
+}
+
+.stat-text {
+    font-weight: 500;
+}
+
+.item-spells {
+    margin: 0.75rem 0;
+    padding: 0.75rem;
+    background: rgba(138, 43, 226, 0.1);
+    border: 1px solid rgba(138, 43, 226, 0.3);
+    border-radius: 4px;
+}
+
+.spell-effect {
+    margin-bottom: 0.5rem;
+}
+
+.spell-effect:last-child {
+    margin-bottom: 0;
+}
+
+.spell-name {
+    color: #da70d6;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.spell-description {
+    color: #e6d5ff;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+.item-set {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
+}
+
+.set-name {
+    color: #ffd700;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+}
+
+.set-bonus {
+    font-size: 0.8rem;
+    margin: 0.35rem 0;
+    padding-left: 0.5rem;
+    border-left: 2px solid;
+}
+
+.set-bonus.active {
+    color: #00ff00;
+    border-left-color: #00ff00;
+    font-weight: 600;
+}
+
+.set-bonus.inactive {
+    color: #888888;
+    border-left-color: #555555;
+}
+
+.item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.item-type {
+    color: #cbd5e0;
+    font-weight: 500;
+}
+
+.item-sockets {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.socket-gem {
+    font-size: 1.2rem;
+    cursor: help;
+    filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.6));
+    animation: gemGlow 2s ease-in-out infinite;
+}
+
+@keyframes gemGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.6));
+    }
+    50% {
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
+    }
+}
+
+@media (max-width: 768px) {
+    .character-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .character-name {
+        font-size: 2rem;
+    }
+    
+    .character-title {
+        font-size: 1rem;
+    }
+    
+    .stats-detail-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-scroll-container {
+        max-height: 400px;
+    }
+    
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
