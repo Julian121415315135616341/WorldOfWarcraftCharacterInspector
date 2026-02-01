@@ -408,6 +408,16 @@
     color: #3ecc71;
 }
 
+.detail-value.haste {
+    color: #ffff00;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+}
+
+.detail-value.criticalstrike {
+    color: #ff6b6b;
+    text-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+}
+
 .equipment-section {
     margin-top: 2rem;
     background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);

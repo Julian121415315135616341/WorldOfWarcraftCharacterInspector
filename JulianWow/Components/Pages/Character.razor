@@ -110,6 +110,15 @@
                                 <span class="detail-label">Armor</span>
                                 <span class="detail-value">@_stats.Armor.Effective</span>
                             </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Spell Power</span>
+                                <span class="detail-value spell-power">@_stats.SpellPower</span>
+                            </div>
+                            
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Mana Regen</span>
+                                <span class="detail-value">@_stats.ManaRegen</span>
+                            </div>
                         </div>
                     </div>
 
@@ -134,28 +143,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="stats-category">
-                        <h3>Spell Stats</h3>
-                        <div class="stats-detail-grid">
-                            <div class="detail-stat-row">
-                                <span class="detail-label">Spell Power</span>
-                                <span class="detail-value spell-power">@_stats.SpellPower</span>
-                            </div>
-                            <div class="detail-stat-row">
-                                <span class="detail-label">Spell Crit</span>
-                                <span class="detail-value">@_stats.SpellCrit.Value.ToString("F2")%</span>
-                            </div>
-                            <div class="detail-stat-row">
-                                <span class="detail-label">Spell Haste</span>
-                                <span class="detail-value">@_stats.SpellHaste.Value.ToString("F2")%</span>
-                            </div>
-                            <div class="detail-stat-row">
-                                <span class="detail-label">Mana Regen</span>
-                                <span class="detail-value">@_stats.ManaRegen</span>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="stats-category">
                         <h3>Secondary Stats</h3>
@@ -166,7 +154,15 @@
                             </div>
                             <div class="detail-stat-row">
                                 <span class="detail-label">Versatility</span>
-                                <span class="detail-value versatility">@_stats.Versatility (@_stats.VersatilityDamageDoneBonus.ToString("F2")%)</span>
+                                <span class="detail-value versatility">@_stats.VersatilityDamageDoneBonus.ToString("F2")%</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Haste</span>
+                                <span class="detail-value haste">@_stats.SpellHaste.Value.ToString("F2")%</span>
+                            </div>
+                            <div class="detail-stat-row">
+                                <span class="detail-label">Critical strike chance</span>
+                                <span class="detail-value criticalstrike">@_stats.SpellCrit.Value.ToString("F2")%</span>
                             </div>
                             <div class="detail-stat-row">
                                 <span class="detail-label">Speed</span>
@@ -175,20 +171,6 @@
                             <div class="detail-stat-row">
                                 <span class="detail-label">Dodge</span>
                                 <span class="detail-value">@_stats.Dodge.Value.ToString("F2")%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stats-category">
-                        <h3>Melee Stats</h3>
-                        <div class="stats-detail-grid">
-                            <div class="detail-stat-row">
-                                <span class="detail-label">Melee Crit</span>
-                                <span class="detail-value">@_stats.MeleeCrit.Value.ToString("F2")%</span>
-                            </div>
-                            <div class="detail-stat-row">
-                                <span class="detail-label">Melee Haste</span>
-                                <span class="detail-value">@_stats.MeleeHaste.Value.ToString("F2")%</span>
                             </div>
                         </div>
                     </div>
