@@ -1,13 +1,20 @@
 ﻿@rendermode InteractiveServer
-@page "/druid"
+@page "/character/{RealmSlug}/{CharacterName}"
 
-<PageTitle>Druid - @(_character?.Name ?? "Loading...")</PageTitle>
+<PageTitle>@(CharacterName ?? "Character") - World of Warcraft</PageTitle>
 
 <div class="wow-character-page">
+    @if (_error != null && _error.Length > 0)
+    {
+        <div class="error-message">
+            <h2>Karakter niet gevonden</h2>
+            <p>Karakter <strong>@CharacterName</strong> op realm <strong>@RealmSlug</strong> kon niet worden gevonden.</p>
+        </div>
+    }
     @if (_isLoading)
     {
         <div class="loading">
-            <h2>Loading character data...</h2>
+            <h2>Karakter wordt geladen</h2>
         </div>
     }
     else if (_character != null)
@@ -25,30 +32,30 @@
             </div>
         </div>
 
-        <div class="character-content">
+        <div class="character-content"> 
             <div class="character-stats-card">
-                <h2>Character Stats</h2>
+                <h2>Karakter Stats</h2>
                 <div class="stats-grid">
                     <div class="stat-item">
                         <span class="stat-label">Item Level</span>
                         <span class="stat-value ilvl">@_character.EquippedItemLevel</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Average iLvl</span>
+                        <span class="stat-label">Gemiddeld iLvl</span>
                         <span class="stat-value">@_character.AverageItemLevel</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Achievement Points</span>
+                        <span class="stat-label">Achievement Punten</span>
                         <span class="stat-value achievement">@_character.AchievementPoints.ToString("N0")</span>
                     </div>
                 </div>
             </div>
 
             <div class="character-info-card">
-                <h2>Character Information</h2>
+                <h2>Karakter informatie</h2>
                 <div class="info-grid">
                     <div class="info-row">
-                        <span class="info-label">Race:</span>
+                        <span class="info-label">Ras:</span>
                         <span class="info-value">@_character.Race.Name</span>
                     </div>
                     <div class="info-row">
@@ -56,7 +63,7 @@
                         <span class="info-value class-@_character.CharacterClass.Name.ToLower()">@_character.CharacterClass.Name</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Specialization:</span>
+                        <span class="info-label">Specializatie:</span>
                         <span class="info-value">@_character.ActiveSpec.Name</span>
                     </div>
                     <div class="info-row">
@@ -85,8 +92,8 @@
         @if (_stats != null)
         {
             <div class="detailed-stats-section">
-                <h2 class="section-title">Detailed Statistics</h2>
-                
+                <h2 class="section-title">Gedetailleerde statistieken</h2>
+
                 <div class="stats-scroll-container">
                     <div class="stats-category">
                         <h3>Core Stats</h3>
@@ -193,7 +200,7 @@
         {
             <div class="equipment-section">
                 <h2 class="section-title">Equipment</h2>
-                
+
                 <div class="equipment-grid">
                     @foreach (var item in _equipment.EquippedItems.OrderBy(i => GetSlotOrder(i.Slot.Type)))
                     {
@@ -205,14 +212,14 @@
                                     <span class="item-level">iLvl @item.Level.Value</span>
                                 }
                             </div>
-                            
+
                             <div class="item-name">@item.Name</div>
-                            
+
                             @if (item.NameDescription != null)
                             {
                                 <div class="item-description">@item.NameDescription.DisplayString</div>
                             }
-                            
+
                             <div class="item-info">
                                 <div class="item-type-row">
                                     <span class="item-type">@item.ItemSubclass.Name</span>
@@ -226,12 +233,12 @@
                                         </span>
                                     }
                                 </div>
-                                
+
                                 @if (item.Armor != null && item.Armor.Value > 0)
                                 {
                                     <div class="item-armor">🛡️ @item.Armor.Value Armor</div>
                                 }
-                                
+
                                 @if (item.Weapon != null)
                                 {
                                     <div class="item-weapon-info">
@@ -249,7 +256,7 @@
                                         }
                                     </div>
                                 }
-                                
+
                                 @if (item.Stats != null && item.Stats.Any(s => !s.IsNegated))
                                 {
                                     <div class="item-stats">
@@ -262,7 +269,7 @@
                                         }
                                     </div>
                                 }
-                                
+
                                 @if (item.Spells != null && item.Spells.Any())
                                 {
                                     <div class="item-spells">
@@ -275,7 +282,7 @@
                                         }
                                     </div>
                                 }
-                                
+
                                 @if (item.Set != null)
                                 {
                                     <div class="item-set">
@@ -300,50 +307,3 @@
     }
 </div>
 
-@code {
-    private string GetFactionClass()
-    {
-        return _character?.Faction.Type.ToLower() ?? "";
-    }
-    
-    private int GetSlotOrder(string slotType)
-    {
-        return slotType switch
-        {
-            "HEAD" => 1,
-            "NECK" => 2,
-            "SHOULDER" => 3,
-            "BACK" => 4,
-            "CHEST" => 5,
-            "WRIST" => 6,
-            "HANDS" => 7,
-            "WAIST" => 8,
-            "LEGS" => 9,
-            "FEET" => 10,
-            "FINGER_1" => 11,
-            "FINGER_2" => 12,
-            "TRINKET_1" => 13,
-            "TRINKET_2" => 14,
-            "MAIN_HAND" => 15,
-            "OFF_HAND" => 16,
-            _ => 99
-        };
-    }
-    
-    private string GetStatIcon(string statType)
-    {
-        return statType switch
-        {
-            "INTELLECT" => "🧠",
-            "STAMINA" => "❤️",
-            "STRENGTH" => "💪",
-            "AGILITY" => "🏃",
-            "HASTE_RATING" => "⚡",
-            "CRIT_RATING" => "💥",
-            "MASTERY_RATING" => "🎯",
-            "VERSATILITY" => "🔄",
-            "COMBAT_RATING_SPEED" => "💨",
-            _ => "+"
-        };
-    }
-}

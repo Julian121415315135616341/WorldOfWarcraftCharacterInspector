@@ -1,4 +1,4 @@
-﻿﻿.wow-character-page {
+﻿.wow-character-page {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
@@ -707,23 +707,23 @@
     .character-content {
         grid-template-columns: 1fr;
     }
-    
+
     .character-name {
         font-size: 2rem;
     }
-    
+
     .character-title {
         font-size: 1rem;
     }
-    
+
     .stats-detail-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .stats-scroll-container {
         max-height: 400px;
     }
-    
+
     .equipment-grid {
         grid-template-columns: 1fr;
     }

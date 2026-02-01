@@ -15,9 +15,8 @@ public class BattleNetAgent(BattleNetAuth battleNetAuth) : IBattleNetAgent
     {
         return await battleNetAuth.GetAccessToken();
     }
-
-
-    public async Task<WowCharacter> GetDruidCharacter()
+    
+    public async Task<WowCharacter> GetCharacter(string realmSlug, string characterName)
     {
         var accessToken = await GetAccessToken();
 
@@ -26,8 +25,8 @@ public class BattleNetAgent(BattleNetAuth battleNetAuth) : IBattleNetAgent
                 "profile",
                 "wow",
                 "character",
-                "lightnings-blade",
-                "jvlian"
+                realmSlug.ToLowerInvariant(),
+                characterName.ToLowerInvariant()
             )
             .SetQueryParams(new
             {
@@ -40,7 +39,7 @@ public class BattleNetAgent(BattleNetAuth battleNetAuth) : IBattleNetAgent
         return response;
     }
     
-    public async Task<WowCharacterStats> GetDruidStats()
+    public async Task<WowCharacterStats> GetCharacterStats(string realmSlug, string characterName)
     {
         var accessToken = await GetAccessToken();
 
@@ -49,8 +48,8 @@ public class BattleNetAgent(BattleNetAuth battleNetAuth) : IBattleNetAgent
                 "profile",
                 "wow",
                 "character",
-                "lightnings-blade",
-                "jvlian",
+                realmSlug.ToLowerInvariant(),
+                characterName.ToLowerInvariant(),
                 "statistics"
             )
             .SetQueryParams(new
@@ -64,7 +63,7 @@ public class BattleNetAgent(BattleNetAuth battleNetAuth) : IBattleNetAgent
         return response;
     }
     
-    public async Task<WowEquipment> GetDruidEquipment()
+    public async Task<WowEquipment> GetCharacterEquipment(string realmSlug, string characterName)
     {
         var accessToken = await GetAccessToken();
 
@@ -73,8 +72,8 @@ public class BattleNetAgent(BattleNetAuth battleNetAuth) : IBattleNetAgent
                 "profile",
                 "wow",
                 "character",
-                "lightnings-blade",
-                "jvlian",
+                realmSlug.ToLowerInvariant(),
+                characterName.ToLowerInvariant(),
                 "equipment"
             )
             .SetQueryParams(new

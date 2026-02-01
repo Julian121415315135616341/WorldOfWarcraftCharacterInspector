@@ -1,6 +1,79 @@
-﻿@page "/"
+﻿@rendermode InteractiveServer
+@page "/"
+@inject NavigationManager NavigationManager
 
-<PageTitle>World of warcraft van Julian</PageTitle>
+<PageTitle>World of warcraft opzoekding van Julian</PageTitle>
 
-<h1>Welkom!</h1>
+<div class="home-container">
+    <h1>Welkom!</h1>
+    
+    <div class="character-search-card">
+        <h2>Zoek een karakter</h2>
+        <p class="search-description">Voer de naam en realm van een karakter in</p>
+        
+        <EditForm Model="@searchModel" OnValidSubmit="@HandleSearch">
+            <DataAnnotationsValidator />
+            
+            <div class="form-group">
+                <label for="characterName">Naam</label>
+                <InputText id="characterName" 
+                          @bind-Value="searchModel.CharacterName" 
+                          placeholder="Jvlian" 
+                          class="form-control" />
+                <ValidationMessage For="@(() => searchModel.CharacterName)" />
+            </div>
+            
+            <div class="form-group">
+                <label for="realmName">Realm Name</label>
+                <InputText id="realmName" 
+                          @bind-Value="searchModel.RealmName" 
+                          placeholder="lightnings-blade" 
+                          class="form-control" />
+                <ValidationMessage For="@(() => searchModel.RealmName)" />
+                <small class="form-text">Gebruik de realm slum (lightnings-blade ipv Lightning's Blade)</small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Bekijk karakter</button>
+        </EditForm>
+        
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="error-message">
+                @errorMessage
+            </div>
+        }
+    </div>
+    
+    <div class="quick-links">
+        <h3>Snelle toegang want ik ben lui</h3>
+        <a href="/character/lightnings-blade/Jvlian" class="quick-link-btn">Bekijk Jvlian (Druid)</a>
+    </div>
+</div>
 
+@code {
+    private SearchModel searchModel = new();
+    private string errorMessage = "";
+    
+    private void HandleSearch()
+    {
+        errorMessage = "";
+        
+        if (string.IsNullOrWhiteSpace(searchModel.CharacterName) || 
+            string.IsNullOrWhiteSpace(searchModel.RealmName))
+        {
+            errorMessage = "Please enter both character name and realm.";
+            return;
+        }
+        
+        var realmSlug = searchModel.RealmName.ToLowerInvariant().Replace(" ", "-");
+        var characterName = searchModel.CharacterName.ToLowerInvariant();
+        
+        NavigationManager.NavigateTo($"/character/{realmSlug}/{characterName}");
+    }
+    
+    public class SearchModel
+    {
+        public string CharacterName { get; set; } = "";
+        public string RealmName { get; set; } = "";
+    }
+}
