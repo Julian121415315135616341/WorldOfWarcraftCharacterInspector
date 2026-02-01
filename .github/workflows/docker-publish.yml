@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: julianwow  # Change this to whatever you want your image to be called
+  IMAGE_NAME: julian121415315135616341/julianwow 
 
 jobs:
   build-and-push:
@@ -48,5 +48,5 @@ jobs:
           context: ./JulianWow
           file: ./JulianWow/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
