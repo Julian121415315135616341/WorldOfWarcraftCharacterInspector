@@ -1,6 +1,7 @@
 ﻿using JulianWow.Agents;
 using JulianWow.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace JulianWow.Components.Pages;
 
@@ -8,6 +9,9 @@ public partial class Character
 {
     [Inject]
     public IBattleNetAgent BattleNetAgent { get; set; } = null!;
+    
+    [Inject]
+    public IJSRuntime JS { get; set; } = null!;
     
     [Parameter]
     public string? RealmSlug { get; set; }
@@ -29,6 +33,20 @@ public partial class Character
     protected override async Task OnParametersSetAsync()
     {
         await LoadCharacter();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_character != null)
+        {
+            var title = $"{_character.Name} - World of Warcraft";
+            await JS.InvokeVoidAsync("eval", $"document.title = '{title}';");
+        }
+        else if (!string.IsNullOrEmpty(CharacterName))
+        {
+            var title = $"{CharacterName} - World of Warcraft";
+            await JS.InvokeVoidAsync("eval", $"document.title = '{title}';");
+        }
     }
 
     private async Task LoadCharacter()

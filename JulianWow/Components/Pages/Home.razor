@@ -1,7 +1,8 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
-<PageTitle>World of warcraft opzoekding van Julian</PageTitle>
+<PageTitle>World of warcraft opzoekding</PageTitle>
 
 <div class="home-container">
     <h1>Welkom!</h1>
@@ -52,6 +53,14 @@
 @code {
     private SearchModel searchModel = new();
     private string errorMessage = "";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("eval", "document.title = 'World of warcraft opzoekding van Julian';");
+        }
+    }
     
     private void HandleSearch()
     {
